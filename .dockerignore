@@ -1,0 +1,31 @@
+# Python cache / temp files
+__pycache__/
+src/pipeline/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+*.env
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.egg-info
+dist/
+build/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Data folders
+results/

@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+*.log
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Data 
+data/lesion_symptom_mask
+data/mni_icbm_avg_152_t1
+*.nii.gz
+*.nii
+
+# Weights
+hd-bet_params/release_2.0.0
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific
+.vscode/
+.idea/

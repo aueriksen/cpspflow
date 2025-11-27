@@ -1,0 +1,10 @@
+numpy<=2.0.1
+antspyx==0.5.4
+nibabel
+pydicom
+SimpleITK
+matplotlib
+scikit-image
+scipy
+tqdm
+HD_BET==2.0.1

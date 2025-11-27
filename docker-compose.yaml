@@ -1,0 +1,16 @@
+version: "3.10"
+
+services:
+  cpspflow:
+    build: .
+    container_name: cpspflow
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - MNI_TEMPLATE=/app/data/mni_icbm_avg_152_t1/icbm_avg_152_t1_tal_nlin_symmetric_VI_brain.nii
+      - CPSP_MASK=/app/data/lesion_symptom_mask/results_mask_mirrored_resampled.nii.gz
+    volumes:
+      - ./data:/app/data       # Provides MNI + CPSP masks (already bundled)
+      - /var/run/docker.sock:/var/run/docker.sock  # For DeepISLES Docker calls
+      - ./subjects:/subjects   # User input/output storage
+    command: ["--help"]
