@@ -95,6 +95,30 @@ The pipeline runs inside a Docker container (CPSPFlow), but the DeepISLES segmen
 
 ---
 
+## HD-BET Weights for Local Runs
+
+For brain extraction using HD-BET on your **local machine** (outside Docker), you need to provide the model weights manually.
+
+1. **Download the HD-BET weights**:  
+   [Release v1.5.0](https://zenodo.org/records/14445620/files/release_v1.5.0.zip?download=1)
+
+2. **Extract the weights** and place them in your CPSP pipeline folder, e.g.:  
+   ```text
+   ~/hd-bet_params/release_2.0.0/
+   ```
+
+3. **Update the Python script** that calls HD-BET (brain_extraction.py) to use these weights:
+   ```text
+   from HD_BET import paths
+   paths.folder_with_parameter_files = "/path/to/hd-bet_weights/release_1.5.0"
+   ```
+
+**Notes**:  
+* The folder should contain all files from the zip, unzipped.  
+* This step is only required for running HD-BET locally; when running via Docker, the pipeline can use the pre-installed weights inside the container.
+
+---
+
 ## References
 
 * ANTsPy / ANTs: [Documentation](https://antspy.readthedocs.io/en/stable/)  
