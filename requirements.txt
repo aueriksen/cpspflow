@@ -8,3 +8,4 @@ scikit-image
 scipy
 tqdm
 HD_BET==2.0.1
+dicom2nifti
