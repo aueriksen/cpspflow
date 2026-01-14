@@ -17,6 +17,9 @@ data/mni_icbm_avg_152_t1
 *.nii.gz
 *.nii
 
+# Jupyter notebooks
+notebooks/
+
 # Weights
 hd-bet_params/release_2.0.0
 
