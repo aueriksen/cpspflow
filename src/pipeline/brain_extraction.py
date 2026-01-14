@@ -2,8 +2,8 @@ import os
 # import subprocess
 from src.pipeline.utils import load_img
 import torch
-# from HD_BET import paths
-# paths.folder_with_parameter_files = "/app/hd-bet_params/release_2.0.0"
+from HD_BET import paths
+paths.folder_with_parameter_files = "/app/hd-bet_params/release_2.0.0"
 from HD_BET import hd_bet_prediction
 
 # https://pmc.ncbi.nlm.nih.gov/articles/PMC6865732/
