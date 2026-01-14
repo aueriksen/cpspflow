@@ -10,6 +10,8 @@ venv/
 .env/
 *.env
 
+notebooks/
+
 # System files
 .DS_Store
 Thumbs.db
