@@ -32,7 +32,7 @@ subject_folder/
 
 ## Installation
 
-1. **Install [Docker](https://docs.docker.com/engine/install/)**  
+1. **Install [Docker desktop](https://docs.docker.com/desktop/)**  
 2. **Install [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)**  
 3. **Open a command line or terminal** (e.g., PowerShell on Windows, Terminal on Linux/Mac) and verify GPU access inside Docker:  
     ```bash
