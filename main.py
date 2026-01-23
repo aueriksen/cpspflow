@@ -50,7 +50,7 @@ def parse_args():
                         choices=["Rigid", "Affine", "SyN"],
                         help="Transformation type for MNI mapping.")
 
-    parser.add_argument("--thr_analysis", type=float, default=0.51,
+    parser.add_argument("--thr_analysis", type=float, default=0.01,
                         help="Lesion-symptom overlap threshold.")
 
     parser.add_argument("--parallelize", action="store_true",
