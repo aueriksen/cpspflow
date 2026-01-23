@@ -17,7 +17,7 @@ def parse_args():
 
     # New argument names
     parser.add_argument("--input_dir", required=True,
-                        help="Folder containing the subject’s NIfTI or DICOM files.")
+                        help="Folder containing the subject's NIfTI or DICOM files.")
     parser.add_argument("--output_dir", required=True,
                         help="Output directory (absolute path).")
 
@@ -56,7 +56,7 @@ def parse_args():
                         help="Transformation type for MNI mapping.")
 
     parser.add_argument("--thr_analysis", type=float, default=0.51,
-                        help="Lesion–symptom overlap threshold.")
+                        help="Lesion-symptom overlap threshold.")
 
     parser.add_argument("--parallelize", action="store_true",
                         help="Parallelize.")
