@@ -1,7 +1,7 @@
 import os
 
 from src.pipeline.dicom_to_nifti import dicom_to_nifti
-from src.pipeline.utils import load_img, load_and_check_images, housekeeping, create_logger, runtime_checks, resolve_host_path
+from src.pipeline.utils import load_img, load_and_check_images, housekeeping, create_logger, runtime_checks, resolve_host_path, save_results_to_csv
 from src.pipeline.subject_registration import compute_within_subject_transforms, apply_transforms_and_brain_masks
 from src.pipeline.brain_extraction import extract_brain_dwi_flair
 from src.pipeline.deepisles_segmentation import run_deepisles
@@ -15,11 +15,12 @@ def run_full_pipeline(
     adc_file_name: str,
     flair_file_name: str,
     output_dir: str, # Full path
-    save_intermediate: bool,
-    symptom_mask_path: str,
-    mni_template_path: str,
+    csv_result_path: str = None, # If none, it creates it in the output folder
+    save_intermediate: bool = False,
+    symptom_mask_path: str = None,
+    mni_template_path: str = None,
     mni_transform_type: str = "Affine", # Either Rigid, Affine, or SyN (SyN is non-linear)
-    thr_analysis: float = 0.51,
+    thr_analysis: float = 0.01,
     parallelize = True,
 ):
     """
@@ -116,7 +117,7 @@ def run_full_pipeline(
     )
 
     # Overlap analysis with symptom mask
-    logger.info("=== Running lesion–symptom overlap analysis ===")
+    logger.info("=== Running lesion-symptom overlap analysis ===")
     analysis_results = run_overlap_analysis(
         mni_lesion=mni_outputs["lesion"],
         cpsp_mask=images["symptom_mask"],
@@ -125,6 +126,12 @@ def run_full_pipeline(
     )
 
     logger.info(f"Overlap results: {analysis_results}")
+
+    # Save it as a csv_file
+    if csv_result_path is None:
+        csv_result_path = os.path.join(output_dir, "cpsp_results.csv")
+    analysis_results["subject_id"] = os.path.basename(subject_nifti_folder)
+    save_results_to_csv(analysis_results, csv_result_path)
 
     logger.info("Housekeeping")
     housekeeping(output_dir=output_dir, save_intermediate=save_intermediate, logger = logger)
