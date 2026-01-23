@@ -15,7 +15,7 @@ def run_full_pipeline(
     adc_file_name: str,
     flair_file_name: str,
     output_dir: str, # Full path
-    csv_result_path: str = None, # If none, it creates it in the output folder
+    csv_result_path: str = None, # If none, it creates it in the output folder - Remember to mount folder then...
     save_intermediate: bool = False,
     symptom_mask_path: str = None,
     mni_template_path: str = None,
