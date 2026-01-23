@@ -29,6 +29,11 @@ def parse_args():
                         help="Filename for ADC inside subject_dir.")
     parser.add_argument("--flair", required=True,
                         help="Filename for FLAIR inside subject_dir.")
+    
+    parser.add_argument(
+        "--csv_result_path",
+        help="Path to CSV file where CPSP results will be saved."
+    )
 
     # Optional, but can override defaults
     parser.add_argument(
@@ -73,6 +78,7 @@ def main():
         adc_file_name=args.adc,
         flair_file_name=args.flair,
         output_dir=args.output_dir,
+        csv_result_path=args.csv_result_path,
         save_intermediate=args.save_intermediate,
         symptom_mask_path=args.symptom_mask,
         mni_template_path=args.mni_template,
