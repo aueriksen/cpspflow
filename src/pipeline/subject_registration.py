@@ -34,7 +34,7 @@ def compute_within_subject_transforms(fixed, moving_dict, output_path, save=True
         outprefix = os.path.join(output_path, f"{name}_to_fixed_")
         logger.info(f"Registering {name} to fixed image...")
         try:
-            reg = ants.registration(fixed=fixed, moving=moving, outprefix=outprefix, **reg_kwargs)
+            reg = ants.registration(fixed=fixed, moving=moving, outprefix=outprefix, random_seed=42, **reg_kwargs)
         except Exception as e:
             logger.error(f"Registration failed for {name}: {e}")
             raise

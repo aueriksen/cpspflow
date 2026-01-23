@@ -24,7 +24,8 @@ def register_subject_to_mni(images_to_register, mni_template, output_dir, type_o
         moving=images_to_register["dwi_b0"],
         type_of_transform=type_of_transform,  # or "Rigid+Affine", or "SyN" if nonlinear desired
         verbose=False,
-        outprefix=os.path.join(reg_path, "dwi_b0_to_MNI_")
+        outprefix=os.path.join(reg_path, "dwi_b0_to_MNI_"),
+        random_seed=42
     )
 
     # Apply the same transform to all other images
