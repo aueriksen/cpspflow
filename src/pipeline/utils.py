@@ -1,8 +1,9 @@
 import os
 import shutil
-from typing import List
+from typing import List, Dict
 import logging
 import subprocess
+import csv
 import numpy as np 
 import ants
 import torch
@@ -227,6 +228,33 @@ def runtime_checks(logger):
         raise RuntimeError("docker CLI missing in container.")
 
     logger.info("Runtime checks passed successfully.")
+
+
+def save_results_to_csv(
+    result: Dict,
+    csv_path: str
+) -> None:
+    """
+    Save a single result dictionary to a CSV file.
+    If the CSV already exists, the result is appended.
+    If not, the header is written automatically.
+
+    Args:
+        result (dict): Dictionary containing result values.
+        csv_path (str): Full path to output CSV file.
+    """
+
+    os.makedirs(os.path.dirname(csv_path), exist_ok=True)
+
+    write_header = not os.path.exists(csv_path)
+
+    with open(csv_path, mode="a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=result.keys())
+
+        if write_header:
+            writer.writeheader()
+
+        writer.writerow(result)
 
 
 
