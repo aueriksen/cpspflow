@@ -39,6 +39,24 @@ def load_img(raw_img_path, orient="RAS"):
     ants_image = ants.image_read(raw_img_path, reorient=orient)
     return ants_image
 
+def resample_image_to_target(
+    image: ants.ANTsImage,
+    target: ants.ANTsImage,
+    output_path: str,
+    interp_type: str = "linear",
+) -> ants.ANTsImage:
+
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    resampled = ants.resample_image_to_target(
+        image=image,
+        target=target,
+        interp_type=interp_type,
+    )
+    ants.image_write(resampled, output_path)
+
+    return resampled
+
 
 def normalize_image(image):
     normalized_img = ants.iMath(image, "Normalize")

@@ -1,7 +1,7 @@
 import os
 
 from src.pipeline.dicom_to_nifti import dicom_to_nifti
-from src.pipeline.utils import load_img, load_and_check_images, housekeeping, create_logger, runtime_checks, resolve_host_path, save_results_to_csv
+from src.pipeline.utils import load_img, load_and_check_images, housekeeping, create_logger, runtime_checks, resolve_host_path, save_results_to_csv, resample_image_to_target
 from src.pipeline.subject_registration import compute_within_subject_transforms, apply_transforms_and_brain_masks
 from src.pipeline.brain_extraction import extract_brain_dwi_flair
 from src.pipeline.deepisles_segmentation import run_deepisles
@@ -58,9 +58,12 @@ def run_full_pipeline(
     images = load_and_check_images(input_paths, logger = logger)
 
     # Brain extraction (HD-BET) on raw DWI b0 and FLAIR
+    flair_output_path = os.path.join(output_dir, "resampled_flair.nii.gz")
+    images["flair"] = resample_image_to_target(images["flair"], images["dwi_b1000"], output_path=flair_output_path)
+
     logger.info("=== Running HD-BET on DWI b0 + FLAIR ===")
     bet_output_dir = os.path.join(output_dir, "hd_bet_results")
-    brain_masks_dict = extract_brain_dwi_flair(input_paths["dwi_b0"], input_paths["flair"], bet_output_dir, logger = logger)
+    brain_masks_dict = extract_brain_dwi_flair(input_paths["dwi_b0"], flair_output_path, bet_output_dir, logger = logger)
 
     # Within-subject registration (raw scans with skull)
     logger.info("=== Within-subject registration ===")
