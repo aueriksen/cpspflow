@@ -7,9 +7,9 @@ def compute_within_subject_transforms(fixed, moving_dict, output_path, save=True
     Compute within-subject registration transforms for multiple scans to a fixed reference.
 
     Args:
-        fixed (ANTsImage or str): Reference image (e.g., DWI b1000)
+        fixed (ANTsImage or str): Reference image (e.g., DWI b0)
         moving_dict (dict): Dictionary of {name: ANTsImage or path} for moving images
-            Example: {"dwi_b0": b0_image, "adc": adc_image, "flair": flair_image}
+            Example: {"dwi_b1000": b1000_image, "adc": adc_image, "flair": flair_image}
         output_path (str): Folder to save registered images
         save (bool): Whether to write registered images to disk
 
@@ -53,7 +53,7 @@ def compute_within_subject_transforms(fixed, moving_dict, output_path, save=True
 
 def apply_transforms_and_brain_masks(
     registered: dict,
-    dwi_b1000,
+    dwi_b0,
     brain_masks: dict,
     transforms: dict,
     output_dir: str,
@@ -69,13 +69,7 @@ def apply_transforms_and_brain_masks(
 
     logger.info("Applying registration transforms to brain masks...")
 
-    # Transform BET masks into registered (b1000) space
-    b0_mask_reg = apply_transform(
-        fixed=registered["dwi_b0"],
-        moving_mask=brain_masks["dwi_b0_brain_mask"],
-        transform_list=transforms["dwi_b0"]
-    )
-
+    # Transform BET masks into registered (b0) space
     flair_mask_reg = apply_transform(
         fixed=registered["flair"],
         moving_mask=brain_masks["flair_brain_mask"],
@@ -86,9 +80,9 @@ def apply_transforms_and_brain_masks(
 
     # Apply masks to aligned images
     masked = {
-        "dwi_b1000_brain": apply_mask(dwi_b1000, b0_mask_reg),
-        "dwi_b0_brain": apply_mask(registered["dwi_b0"], b0_mask_reg),
-        "adc_brain": apply_mask(registered["adc"], b0_mask_reg),
+        "dwi_b1000_brain": apply_mask(registered["dwi_b1000"], brain_masks["dwi_b0_brain_mask"]),
+        "dwi_b0_brain": brain_masks["dwi_b0_brain"],
+        "adc_brain": apply_mask(registered["adc"], brain_masks["dwi_b0_brain_mask"]),
         "flair_brain": apply_mask(registered["flair"], flair_mask_reg),
     }
 

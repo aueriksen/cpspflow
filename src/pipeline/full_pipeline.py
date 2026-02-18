@@ -68,13 +68,13 @@ def run_full_pipeline(
     # Within-subject registration (raw scans with skull)
     logger.info("=== Within-subject registration ===")
     moving_dict = {
-        "dwi_b0": images["dwi_b0"],
+        "dwi_b1000": images["dwi_b1000"],
         "adc": images["adc"],
         "flair": images["flair"]
     }
     reg_folder = os.path.join(output_dir, "within_subject_reg")
     registered_images, transforms = compute_within_subject_transforms(
-        fixed=images["dwi_b1000"],
+        fixed=images["dwi_b0"],
         moving_dict=moving_dict,
         output_path=reg_folder,
         save=save_intermediate,
@@ -83,7 +83,7 @@ def run_full_pipeline(
 
     subject_space_results = os.path.join(output_dir, "subject_space_results")
     logger.info("=== Applying transforms + brain masks ===")
-    preprocessed = apply_transforms_and_brain_masks(registered=registered_images, dwi_b1000=images["dwi_b1000"], brain_masks=brain_masks_dict, transforms=transforms, output_dir=subject_space_results, logger = logger)
+    preprocessed = apply_transforms_and_brain_masks(registered=registered_images, dwi_b0=images["dwi_b0"], brain_masks=brain_masks_dict, transforms=transforms, output_dir=subject_space_results, logger = logger)
 
     # DeepISLES segmentation
     logger.info("=== Running DeepISLES segmentation ===")
